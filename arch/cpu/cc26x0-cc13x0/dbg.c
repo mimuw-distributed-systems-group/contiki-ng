@@ -30,13 +30,23 @@
 /*---------------------------------------------------------------------------*/
 #include "cc26xx-uart.h"
 #include "ti-lib.h"
+#include "contiki.h"
+#if SCIF_UART_PRINTF
+#include "scif_uart_emulator.h"
+#define LOST_BUFFER_SIZE 16
+#define SC_UART_FREE_THRESHOLD (2 * SCIF_UART_TX_FIFO_MAX_COUNT / 4)
+#endif
 
 #include <string.h>
 /*---------------------------------------------------------------------------*/
 int
 dbg_putchar(int c)
 {
+#if SCIF_UART_PRINTF
+  scifUartTxPutChar(c);
+#else
   cc26xx_uart_write_byte(c);
+#endif
   return c;
 }
 /*---------------------------------------------------------------------------*/
@@ -44,7 +54,43 @@ unsigned int
 dbg_send_bytes(const unsigned char *s, unsigned int len)
 {
   unsigned int i = 0;
+#if SCIF_UART_PRINTF
+  static int bytes_lost = 0;
+  char lost_buffer[LOST_BUFFER_SIZE];
 
+  int free = 2 * (SCIF_UART_TX_FIFO_MAX_COUNT - scifUartGetTxFifoCount());
+  if (bytes_lost > 0) {   
+    if (free >= SC_UART_FREE_THRESHOLD) {
+      int message_size = len + 
+            snprintf(lost_buffer, LOST_BUFFER_SIZE, "\nLOST:%d\n", bytes_lost);
+          
+      if (free < message_size) {
+        bytes_lost += len;
+        return 0;
+      }
+      else {
+        scifUartTxPutChars(lost_buffer, message_size);
+        bytes_lost = 0;
+      }
+    }
+    else {
+      bytes_lost += len;
+      return 0;
+    }
+  }
+  else {
+    if (free < len) {
+      bytes_lost += len - free;
+      len = free;
+    }
+  }
+  while (i + 1 < len && s[i] != 0 && s[i + 1] != 0) {
+    scifUartTxPutTwoChars(s[i], s[i + 1]);
+    i += 2;
+  }
+  if (i < len && s[i] != 0)
+    scifUartTxPutChar(s[i++]);
+#else
   while(s && *s != 0) {
     if(i >= len) {
       break;
@@ -53,12 +99,13 @@ dbg_send_bytes(const unsigned char *s, unsigned int len)
     i++;
   }
 
+
   /*
    * Wait for the buffer to go out. This is to prevent garbage when used
    * between UART on/off cycles
    */
   while(cc26xx_uart_busy() == UART_BUSY);
-
+#endif
   return i;
 }
 /*---------------------------------------------------------------------------*/

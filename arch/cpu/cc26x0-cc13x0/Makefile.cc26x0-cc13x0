@@ -51,6 +51,7 @@ CONTIKI_CPU_SOURCEFILES += random.c soc-trng.c int-master.c
 CONTIKI_CPU_SOURCEFILES += spi-arch.c
 CONTIKI_CPU_SOURCEFILES += cc26xx-aes.c
 CONTIKI_CPU_SOURCEFILES += fault-handlers.c $(TI_XXWARE_STARTUP_SRCS)
+CONTIKI_CPU_SOURCEFILES += scif_osal_whip6.c scif_framework.c cc26xx-scif-uart.c
 
 CONTIKI_SOURCEFILES += $(CONTIKI_CPU_SOURCEFILES)
 

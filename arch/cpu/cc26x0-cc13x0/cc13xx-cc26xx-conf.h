@@ -164,6 +164,14 @@
  *
  * @{
  */
+#ifndef SCIF_UART_PRINTF
+#define SCIF_UART_PRINTF 1
+#endif
+
+#ifndef SCIF_UART_BAUD_RATE
+#define SCIF_UART_BAUD_RATE 230400
+#endif
+
 #ifndef TI_UART_CONF_ENABLE
 #define TI_UART_CONF_ENABLE                1 /**< Enable/Disable UART I/O */
 #endif
