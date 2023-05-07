@@ -55,6 +55,9 @@
 #include "ble-addr.h"
 #include "vims.h"
 #include "dev/cc26xx-uart.h"
+#if SCIF_UART_PRINTF
+#include "dev/cc26xx-scif-uart.h"
+#endif
 #include "dev/soc-rtc.h"
 #include "dev/serial-line.h"
 #include "rf-core/rf-core.h"
@@ -177,6 +180,9 @@ platform_init_stage_two()
   /* Character I/O Initialisation */
 #if CC26XX_UART_CONF_ENABLE
   cc26xx_uart_init();
+#endif
+#if SCIF_UART_PRINTF
+  cc26xx_scif_uart_init();
 #endif
 
   serial_line_init();
