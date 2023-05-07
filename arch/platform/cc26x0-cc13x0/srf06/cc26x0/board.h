@@ -104,10 +104,10 @@
  * Those values are not meant to be modified by the user
  * @{
  */
-#define BOARD_IOID_KEY_LEFT       IOID_UNUSED
-#define BOARD_IOID_KEY_RIGHT      IOID_UNUSED
-#define BOARD_IOID_KEY_UP         IOID_UNUSED
-#define BOARD_IOID_KEY_DOWN       IOID_UNUSED
+#define BOARD_IOID_KEY_LEFT       ((int)IOID_UNUSED)
+#define BOARD_IOID_KEY_RIGHT      ((int)IOID_UNUSED)
+#define BOARD_IOID_KEY_UP         ((int)IOID_UNUSED)
+#define BOARD_IOID_KEY_DOWN       ((int)IOID_UNUSED)
 #define BOARD_IOID_KEY_SELECT     IOID_11
 #define BOARD_KEY_LEFT            (1 << BOARD_IOID_KEY_LEFT)
 #define BOARD_KEY_RIGHT           (1 << BOARD_IOID_KEY_RIGHT)
@@ -122,7 +122,7 @@
  * Those values are not meant to be modified by the user
  * @{
  */
-#define BOARD_IOID_3V3_EN         IOID_UNUSED
+#define BOARD_IOID_3V3_EN         ((int)IOID_UNUSED)
 #define BOARD_3V3_EN              (1 << BOARD_IOID_3V3_EN)
 /** @} */
 /*---------------------------------------------------------------------------*/
@@ -132,9 +132,9 @@
  * Those values are not meant to be modified by the user
  * @{
  */
-#define BOARD_IOID_SPI_SCK        IOID_UNUSED
-#define BOARD_IOID_SPI_MOSI       IOID_UNUSED
-#define BOARD_IOID_SPI_MISO       IOID_UNUSED
+#define BOARD_IOID_SPI_SCK        ((int)IOID_UNUSED)
+#define BOARD_IOID_SPI_MOSI       ((int)IOID_UNUSED)
+#define BOARD_IOID_SPI_MISO       ((int)IOID_UNUSED)
 #define BOARD_SPI_SCK             (1 << BOARD_IOID_SPI_SCK)
 #define BOARD_SPI_MOSI            (1 << BOARD_IOID_SPI_MOSI)
 #define BOARD_SPI_MISO            (1 << BOARD_IOID_SPI_MISO)
@@ -146,9 +146,9 @@
  * Those values are not meant to be modified by the user
  * @{
  */
-#define BOARD_IOID_LCD_MODE       IOID_UNUSED
-#define BOARD_IOID_LCD_RST        IOID_UNUSED
-#define BOARD_IOID_LCD_CS         IOID_UNUSED
+#define BOARD_IOID_LCD_MODE       ((int)IOID_UNUSED)
+#define BOARD_IOID_LCD_RST        ((int)IOID_UNUSED)
+#define BOARD_IOID_LCD_CS         ((int)IOID_UNUSED)
 #define BOARD_IOID_LCD_SCK        BOARD_IOID_SPI_SCK
 #define BOARD_IOID_LCD_MOSI       BOARD_IOID_SPI_MOSI
 #define BOARD_LCD_MODE            (1 << BOARD_IOID_LCD_MODE)
@@ -164,7 +164,7 @@
  * Those values are not meant to be modified by the user
  * @{
  */
-#define BOARD_IOID_SDCARD_CS      IOID_UNUSED
+#define BOARD_IOID_SDCARD_CS      ((int)IOID_UNUSED)
 #define BOARD_SDCARD_CS           (1 << BOARD_IOID_SDCARD_CS)
 #define BOARD_IOID_SDCARD_SCK     BOARD_IOID_SPI_SCK
 #define BOARD_SDCARD_SCK          BOARD_SPI_SCK
