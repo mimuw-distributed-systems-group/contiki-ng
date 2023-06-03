@@ -30,6 +30,10 @@ LDSCRIPT ?= $(CONTIKI_CPU)/cc26xx.ld
 ifdef NODEID
   CFLAGS += -DIEEE_ADDR_NODE_ID=$(NODEID)
 endif
+CFLAGS += -fno-inline-functions
+CFLAGS += -fno-inline-small-functions
+CFLAGS += -fno-inline-functions-called-once
+CFLAGS += -g
 
 ### CPU-dependent directories
 CONTIKI_CPU_DIRS += . dev rf-core rf-core/api rf-core/ble-hal $(TI_XXWARE_STARTUP_DIR)
