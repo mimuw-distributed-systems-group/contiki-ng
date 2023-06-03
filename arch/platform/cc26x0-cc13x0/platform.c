@@ -96,20 +96,7 @@ void board_init(void);
 static void
 fade(leds_mask_t l)
 {
-  volatile int i;
-  int k, j;
-  for(k = 0; k < 800; ++k) {
-    j = k > 400 ? 800 - k : k;
-
-    leds_on(l);
-    for(i = 0; i < j; ++i) {
-      __asm("nop");
-    }
-    leds_off(l);
-    for(i = 0; i < 400 - j; ++i) {
-      __asm("nop");
-    }
-  }
+  __asm("nop");
 }
 /*---------------------------------------------------------------------------*/
 static void
