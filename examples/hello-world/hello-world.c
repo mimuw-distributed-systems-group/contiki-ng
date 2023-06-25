@@ -38,7 +38,7 @@
  */
 
 #include "contiki.h"
-
+#include "net/routing/routing.h"
 #include <stdio.h> /* For printf() */
 /*---------------------------------------------------------------------------*/
 PROCESS(hello_world_process, "Hello world process");
@@ -49,9 +49,10 @@ PROCESS_THREAD(hello_world_process, ev, data)
   static struct etimer timer;
 
   PROCESS_BEGIN();
+  NETSTACK_ROUTING.root_start();
 
-  /* Setup a periodic timer that expires after 10 seconds. */
-  etimer_set(&timer, CLOCK_SECOND * 10);
+  /* Setup a periodic timer that expires after 100 miliseconds. */
+  etimer_set(&timer, CLOCK_SECOND / 10);
 
   while(1) {
     printf("Hello, world\n");

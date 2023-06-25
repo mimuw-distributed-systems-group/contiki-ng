@@ -163,6 +163,7 @@ rf_core_send_cmd(uint32_t cmd, uint32_t *status)
   last_cmd_status = (uint32_t)-1;
   *status = last_cmd_status;
 
+  printf("radio command: %08lx\n", cmd);
   /*
    * If cmd is 4-byte aligned, then it's either a radio OP or an immediate
    * command. Clear the status field if it's a radio OP
@@ -170,6 +171,7 @@ rf_core_send_cmd(uint32_t cmd, uint32_t *status)
   if((cmd & 0x03) == 0) {
     uint32_t cmd_type;
     cmd_type = ((rfc_command_t *)cmd)->commandNo & RF_CORE_COMMAND_TYPE_MASK;
+    printf("radio command no: %04x\n", ((rfc_command_t *)cmd)->commandNo);
     if(cmd_type == RF_CORE_COMMAND_TYPE_IEEE_FG_RADIO_OP ||
        cmd_type == RF_CORE_COMMAND_TYPE_RADIO_OP) {
       is_radio_op = true;
