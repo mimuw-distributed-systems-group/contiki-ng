@@ -53,7 +53,7 @@ enum write_ram_order {
   WRITE_RAM_REVERSE
 };
 
-#define DEBUG 0
+#define DEBUG 1
 #if DEBUG
 #include <stdio.h>
 #define PRINTF(...) printf(__VA_ARGS__)
@@ -944,6 +944,13 @@ cc2420_read(void *buf, unsigned short bufsize)
         packetbuf_set_attr(PACKETBUF_ATTR_RSSI, cc2420_last_rssi);
         packetbuf_set_attr(PACKETBUF_ATTR_LINK_QUALITY, cc2420_last_correlation);
       }
+
+      char* bytes = (char*)buf;
+      PRINTF("Received packet in cc2420 modem:");
+      for (int i = 0; i <= len; i++) {
+        PRINTF("%02X, ", bytes[i]);
+      }
+      PRINTF("/n");
     } else {
       len = FOOTER_LEN;
     }

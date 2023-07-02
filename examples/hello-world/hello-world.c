@@ -38,7 +38,7 @@
  */
 
 #include "contiki.h"
-#include "net/routing/routing.h"
+// #include "net/routing/routing.h"
 #include <stdio.h> /* For printf() */
 /*---------------------------------------------------------------------------*/
 PROCESS(hello_world_process, "Hello world process");
@@ -47,16 +47,18 @@ AUTOSTART_PROCESSES(&hello_world_process);
 PROCESS_THREAD(hello_world_process, ev, data)
 {
   static struct etimer timer;
+  const char* test_message = "Test message";
 
   PROCESS_BEGIN();
-  NETSTACK_ROUTING.root_start();
+  // NETSTACK_ROUTING.root_start();
+  // const char * test_message = "test_message";
 
   /* Setup a periodic timer that expires after 100 miliseconds. */
   etimer_set(&timer, CLOCK_SECOND / 10);
-
   while(1) {
     printf("Hello, world\n");
 
+    NETSTACK_CONF_RADIO.send(test_message, sizeof(test_message));
     /* Wait for the periodic timer to expire and then restart the timer. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
     etimer_reset(&timer);
