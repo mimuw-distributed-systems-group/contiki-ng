@@ -152,6 +152,18 @@
 #else
 #define LEDS_ORANGE LEDS_COLOUR_NONE
 #endif
+
+#ifdef LEDS_CONF_VLED1
+#define LEDS_VLED1 LEDS_CONF_VLED1
+#else
+#define LEDS_VLED1 LEDS_COLOUR_NONE
+#endif
+
+#ifdef LEDS_CONF_VLED2
+#define LEDS_VLED2 LEDS_CONF_VLED2
+#else
+#define LEDS_VLED2 LEDS_COLOUR_NONE
+#endif
 /*---------------------------------------------------------------------------*/
 /**
  * \brief The LED number

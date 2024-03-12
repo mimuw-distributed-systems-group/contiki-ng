@@ -153,7 +153,7 @@ platform_init_stage_one()
   gpio_hal_init();
 
   leds_init();
-  fade(LEDS_RED);
+  fade(LEDS_YELLOW);
 
   /*
    * Disable I/O pad sleep mode and open I/O latches in the AON IOC interface
@@ -169,7 +169,7 @@ platform_init_stage_one()
   ti_lib_int_master_enable();
 
   soc_rtc_init();
-  fade(LEDS_YELLOW);
+  fade(LEDS_VLED1);
 }
 /*---------------------------------------------------------------------------*/
 void
@@ -202,7 +202,7 @@ platform_init_stage_two()
 
   button_hal_init();
 
-  fade(LEDS_GREEN);
+  fade(LEDS_VLED2);
 }
 /*---------------------------------------------------------------------------*/
 void
@@ -234,7 +234,7 @@ platform_init_stage_three()
   process_start(&sensors_process, NULL);
 #endif
 
-  fade(LEDS_ORANGE);
+  fade(LEDS_ALL);
 }
 /*---------------------------------------------------------------------------*/
 void
