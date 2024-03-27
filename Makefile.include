@@ -589,6 +589,10 @@ endif
 	$(TRACE_CP)
 	$(Q)$(CP) $< $@
 
+$(TARGET)_%: $(BUILD_DIR_BOARD)/%
+	$(TRACE_CP)
+	$(Q)$(CP) $< $@
+
 %.ramprof: $(BUILD_DIR_BOARD)/%.$(TARGET)
 	$(NM) -S -td --size-sort $< | grep -i " [abdrw] " | cut -d' ' -f2,4
 
@@ -668,6 +672,13 @@ else
 # Match-anything pattern rule to allow the project makefiles to
 # abstract from the actual binary name. It needs to contain some
 # command in order to be a rule, not just a prerequisite.
+ifdef MULTIPLE_OUTPUTS
+# We want to get multiple outputs. They'll be named "target_app.output".
+%: $(foreach output, $(MULTIPLE_OUTPUTS), $(TARGET)_%.$(output))
+	@
+else
+# We want to get the single, standard output ("app.target").
 %: %.$(TARGET)
 	@
+endif
 endif

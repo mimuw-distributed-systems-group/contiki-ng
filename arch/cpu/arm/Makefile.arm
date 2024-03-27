@@ -79,11 +79,12 @@ ifeq ($(MAKE_WITH_LIB_DBG_IO),1)
 endif
 
 ### CPU-dependent cleanup files
-CLEAN += *.elf *.bin *.lst *.hex *.i16hex
+CLEAN += *.elf *.bin *.flash *.lst *.hex *.i16hex
 
 OUT_HEX = $(BUILD_DIR_BOARD)/%.hex
 OUT_I16HEX = $(BUILD_DIR_BOARD)/%.i16hex
 OUT_BIN = $(BUILD_DIR_BOARD)/%.bin
+OUT_FLASH = $(BUILD_DIR_BOARD)/%.flash
 OUT_LST = $(BUILD_DIR_BOARD)/%.lst
 OUT_ELF = $(BUILD_DIR_BOARD)/%.elf
 
@@ -99,6 +100,10 @@ $(OUT_BIN): $(OUT_ELF)
 	$(TRACE_OBJCOPY)
 	$(Q)$(OBJCOPY) -O binary $(OBJCOPY_FLAGS) $< $@
 
+$(OUT_FLASH): $(OUT_ELF)
+	$(TRACE_OBJCOPY)
+	$(Q)$(OBJCOPY) -O binary $(OBJCOPY_FLAGS) $< $@
+
 $(OUT_LST): $(OUT_ELF)
 	$(TRACE_OBJDUMP)
 	$(Q)$(OBJDUMP) $(OBJDUMP_FLAGS) $< > $@
@@ -106,3 +111,5 @@ $(OUT_LST): $(OUT_ELF)
 $(BUILD_DIR_BOARD)/%.$(TARGET): $(OUT_ELF)
 	$(TRACE_CP)
 	$(Q)cp $< $@
+
+MULTIPLE_OUTPUTS = elf hex flash
