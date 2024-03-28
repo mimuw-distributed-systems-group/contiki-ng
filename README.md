@@ -1,38 +1,28 @@
-<img src="https://github.com/contiki-ng/contiki-ng.github.io/blob/master/images/logo/Contiki_logo_2RGB.png" alt="Logo" width="256">
+# Contiki-NG for CherryMotes of 1KT
 
-# Contiki-NG: The OS for Next Generation IoT Devices
+This is a fork of [Contiki-NG](https://github.com/contiki-ng/contiki-ng) for the CherryMote devices of the [1KT testbed](https://www.mimuw.edu.pl/~iwanicki/projects/heni/1kt.html).
 
-[![Github Actions](https://github.com/contiki-ng/contiki-ng/workflows/CI/badge.svg?branch=develop)](https://github.com/contiki-ng/contiki-ng/actions)
-[![Documentation Status](https://readthedocs.org/projects/contiki-ng/badge/?version=master)](https://contiki-ng.readthedocs.io/en/master/?badge=master)
-[![license](https://img.shields.io/badge/license-3--clause%20bsd-brightgreen.svg)](https://github.com/contiki-ng/contiki-ng/blob/master/LICENSE.md)
-[![Latest release](https://img.shields.io/github/release/contiki-ng/contiki-ng.svg)](https://github.com/contiki-ng/contiki-ng/releases/latest)
-[![GitHub Release Date](https://img.shields.io/github/release-date/contiki-ng/contiki-ng.svg)](https://github.com/contiki-ng/contiki-ng/releases/latest)
-[![Last commit](https://img.shields.io/github/last-commit/contiki-ng/contiki-ng.svg)](https://github.com/contiki-ng/contiki-ng/commit/HEAD)
+Currently, supported are: the CC2650 MCU itself (incl. RF core), the main UART (115200 baud rate, software flow control _xo/xoff_), _SCIF UART PRINTF_ (see below), and LEDs (see below).
 
-[![Stack Overflow Tag](https://img.shields.io/badge/Stack%20Overflow%20tag-Contiki--NG-blue?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/contiki-ng)
-[![Gitter](https://img.shields.io/badge/Gitter-Contiki--NG-blue?logo=gitter)](https://gitter.im/contiki-ng)
-[![Twitter](https://img.shields.io/badge/Twitter-%40contiki__ng-blue?logo=twitter)](https://twitter.com/contiki_ng)
+## Modifications
 
-Contiki-NG is an open-source, cross-platform operating system for Next-Generation IoT devices. It focuses on dependable (secure and reliable) low-power communication and standard protocols, such as IPv6/6LoWPAN, 6TiSCH, RPL, and CoAP. Contiki-NG comes with extensive documentation, tutorials, a roadmap, release cycle, and well-defined development flow for smooth integration of community contributions.
+The design of CherryMote is based on the SmartRF 06 Evaluation Board with CC2650. Use this target and board to compile an app for CherryMotes:
+```
+make TARGET=cc26x0-cc13x0 BOARD=srf06/cc26x0
+```
 
-Unless explicitly stated otherwise, Contiki-NG sources are distributed under
-the terms of the [3-clause BSD license](LICENSE.md). This license gives
-everyone the right to use and distribute the code, either in binary or
-source code format, as long as the copyright license is retained in
-the source code.
+Our modifications to the target and the board include:
 
-Contiki-NG started as a fork of the Contiki OS and retains some of its original features.
+1. Pinout adjusted to CherryMote and its peripherals.
 
-Find out more:
+3. _SCIF UART PRINTF_: an additional, fast UART implemented on the CC2650's Sensor Controller to emit logs with low overhead:
+   ```C
+   printf("Hello world\n");  // Will be emitted via SCIF UART PRINTF
+   ```
 
-* GitHub repository: https://github.com/contiki-ng/contiki-ng
-* Documentation: https://docs.contiki-ng.org/
-* List of releases and changes: https://github.com/contiki-ng/contiki-ng/releases
-* Web site: http://contiki-ng.org
+4. Customized LEDs colors:
+   - `LEDS_YELLOW`: CherryMote's yellow LED,
+   - `LEDS_VLED1`: CherryMote's virtual LED 1,
+   - `LEDS_VLED2`: CherryMote's virtual LED 2.
 
-Engage with the community:
-
-* Discussions on GitHub: https://github.com/contiki-ng/contiki-ng/discussions
-* Contiki-NG tag on Stack Overflow: https://stackoverflow.com/questions/tagged/contiki-ng
-* Gitter: https://gitter.im/contiki-ng
-* Twitter: https://twitter.com/contiki_ng
+5. Modified build system to output `.elf`, `.hex`, and `.flash`.
